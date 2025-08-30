@@ -4,35 +4,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>المعالم التاريخية بالمغرب</title>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
   <style>
-    /* إعدادات أساسية */
+    :root {
+      --bg-light: linear-gradient(135deg, #f9f9f9, #e3f2fd);
+      --text-light: #333;
+      --box-bg-light: white;
+
+      --bg-dark: #121212;
+      --text-dark: #f1f1f1;
+      --box-bg-dark: #1e1e1e;
+    }
+
     body {
       font-family: 'Cairo', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #f9f9f9, #e3f2fd);
-      color: #333;
-      scroll-behavior: smooth;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: all 0.4s ease;
+    }
+
+    body.dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-dark);
     }
 
     header {
       background: linear-gradient(90deg, #1976d2, #42a5f5);
       color: white;
-      padding: 20px;
+      padding: 25px 15px;
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      animation: fadeInDown 1s ease-in-out;
+      position: relative;
     }
 
     header h1 {
       margin: 0;
-      font-size: 2.5em;
+      font-size: 2.3em;
       letter-spacing: 2px;
     }
 
-    /* البوكسات */
+    
+    .toggle-btn {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 1.2em;
+      color: #1976d2;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .toggle-btn:hover {
+      background: #ef5350;
+      color: white;
+      transform: rotate(20deg);
+    }
+
     #boxes {
-      padding: 40px 20px;
+      padding: 50px 20px;
     }
 
     .container {
@@ -44,20 +86,18 @@
     }
 
     .box {
-      background: white;
+      background: var(--box-bg-light);
       border-radius: 15px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
       overflow: hidden;
       text-align: center;
-      transform: translateY(50px);
-      opacity: 0;
-      animation: fadeUp 1s forwards;
+      transition: all 0.3s ease;
     }
 
-    .box:nth-child(1) { animation-delay: 0.2s; }
-    .box:nth-child(2) { animation-delay: 0.4s; }
-    .box:nth-child(3) { animation-delay: 0.6s; }
-    .box:nth-child(4) { animation-delay: 0.8s; }
+    body.dark-mode .box {
+      background: var(--box-bg-dark);
+      box-shadow: 0 6px 15px rgba(255,255,255,0.05);
+    }
 
     .box img {
       width: 100%;
@@ -81,68 +121,135 @@
       color: #ef5350;
     }
 
+    body.dark-mode .box h2 {
+      color: #90caf9;
+    }
+
     .box p {
       padding: 0 15px 20px;
       font-size: 1em;
-      color: #555;
       line-height: 1.6;
     }
 
-    /* Footer */
+    .btn-more {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 16px;
+      background: #1976d2;
+      color: white;
+      border-radius: 25px;
+      font-size: 0.9em;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .btn-more:hover {
+      background: #ef5350;
+    }
+
+    
+    #map {
+      height: 450px;
+      width: 100%;
+      max-width: 1100px;
+      margin: 40px auto;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    
     footer {
       background: linear-gradient(90deg, #42a5f5, #1976d2);
       color: white;
-      text-align: center;
-      padding: 20px;
+      padding: 40px 20px 20px;
       margin-top: 40px;
-      animation: fadeInUp 1s ease-in-out;
     }
 
-    footer h3 {
-      margin: 0;
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .footer-col h3 {
+      margin-bottom: 15px;
       font-size: 1.2em;
-      letter-spacing: 1px;
     }
 
-    /* Animations */
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-50px); }
-      to { opacity: 1; transform: translateY(0); }
+    .footer-col p {
+      font-size: 0.95em;
+      line-height: 1.6;
     }
 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
+    .footer-col ul li {
+      margin: 8px 0;
+    }
+
+    .footer-col ul li a {
+      color: #ffeb3b;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-col ul li a:hover {
+      color: #ffffff;
+    }
+
+    .social-links a {
+      color: white;
+      margin: 0 8px;
+      font-size: 1.5em;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #ffeb3b;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 25px;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      padding-top: 15px;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>المعالم التاريخية بالمغرب</h1>
+    <h1><i class="fa-solid fa-landmark"></i> المعالم التاريخية بالمغرب</h1>
+    <button class="toggle-btn" onclick="toggleDarkMode()">
+      <i class="fa-solid fa-moon"></i>
+    </button>
   </header>
 
   <section id="boxes">
     <div class="container">
 
       <div class="box">
-        <img src="image/معلومات_عن_صومعة_حسان.jpg" alt="صومعة حسان">
+        <img src="image/معلومات_عن_صومعة_حسان.jpg" alt="صومعة حسان" onerror="this.src='https://via.placeholder.com/400x220?text=صورة+ناقصة'">
         <h2>صومعة حسان</h2>
         <p>
           صومعة حسان التاريخية التي تم بناؤها في العصر الموحدي على يد السلطان يعقوب المنصور في مدينة الرباط...
         </p>
+        <a href="#" class="btn-more">المزيد</a>
       </div>
 
       <div class="box">
-        <img src="image/Tour-From-Fes-To-Marrakech-in-3-Days.jpg" alt="جامع الكتبية">
+        <img src="image/Tour-From-Fes-To-Marrakech-in-3-Days.jpg" alt="جامع الكتبية" onerror="this.src='https://via.placeholder.com/400x220?text=صورة+ناقصة'">
         <h2>جامع الكتبية</h2>
         <p>
           جامع الكتبية المراكشي، وهو من المعالم الإسلامية الراسخة في مدينة مراكش ويتميز بمئذنته العالية...
         </p>
+        <a href="#" class="btn-more">المزيد</a>
       </div>
 
       <div class="box">
@@ -151,6 +258,7 @@
         <p>
           موقع شالة الأثري بمدينة الرباط، وهو مكان يجمع بين الأطلال الرومانية والمعالم الإسلامية...
         </p>
+        <a href="#" class="btn-more">المزيد</a>
       </div>
 
       <div class="box">
@@ -159,14 +267,89 @@
         <p>
           موقع وليلي الأثري قرب مدينة مكناس، وهو من أبرز المواقع الأثرية الرومانية في المغرب...
         </p>
+        <a href="#" class="btn-more">المزيد</a>
       </div>
 
     </div>
   </section>
 
+  
+  <section>
+    <h2 style="text-align:center; margin-bottom:15px; color:#1976d2;">
+      <i class="fa-solid fa-map-location-dot"></i> خريطة المعالم
+    </h2>
+    <div id="map"></div>
+  </section>
+
+  <!-- Footer -->
   <footer>
-    <h3>© 2025 جميع الحقوق محفوظة</h3>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3>عن الموقع</h3>
+        <p>
+          هذا الموقع يسلط الضوء على أبرز المعالم التاريخية في المغرب، مع لمسة عصرية
+          لتقديم التراث بطريقة جميلة وسهلة التصفح.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3>روابط سريعة</h3>
+        <ul>
+          <li><a href="#">الرئيسية</a></li>
+          <li><a href="#boxes">المعالم</a></li>
+          <li><a href="#map">الخريطة</a></li>
+          <li><a href="#">اتصل بنا</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>تواصل معنا</h3>
+        <div class="social-links">
+          <a href="https://www.facebook.com/profile.php?id=100070663695575" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/nj._.soufian/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/soufian-nejemeddine-1759402a7/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 جميع الحقوق محفوظة</p>
+    </div>
   </footer>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const icon = document.querySelector('.toggle-btn i');
+      if (document.body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+
+    
+    var map = L.map('map').setView([32.0, -6.5], 6); // وسط المغرب
+
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    
+    var landmarks = [
+      { name: "صومعة حسان - الرباط", coords: [34.0167, -6.8333] },
+      { name: "جامع الكتبية - مراكش", coords: [31.6248, -7.9894] },
+      { name: "شالة - الرباط", coords: [34.0049, -6.8205] },
+      { name: "وليلي - مكناس", coords: [34.0739, -5.5550] }
+    ];
+
+    landmarks.forEach(l => {
+      L.marker(l.coords).addTo(map).bindPopup("<b>" + l.name + "</b>");
+    });
+  </script>
 
 </body>
 </html>
