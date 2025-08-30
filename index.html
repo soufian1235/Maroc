@@ -1,52 +1,54 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>معالم المغرب</title>
+  <title>المعالم التاريخية بالمغرب</title>
   <style>
-    /* ===== الأساسيات ===== */
+    /* إعدادات أساسية */
     body {
-      font-family: "Cairo", sans-serif;
+      font-family: 'Cairo', sans-serif;
       margin: 0;
       padding: 0;
-      background: #fdfdfd;
+      background: linear-gradient(135deg, #f9f9f9, #e3f2fd);
       color: #333;
       scroll-behavior: smooth;
     }
 
     header {
-      background: linear-gradient(135deg, #e63946, #457b9d);
+      background: linear-gradient(90deg, #1976d2, #42a5f5);
       color: white;
+      padding: 20px;
       text-align: center;
-      padding: 2rem 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      animation: slideDown 1s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: fadeInDown 1s ease-in-out;
     }
 
     header h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 2.5em;
+      letter-spacing: 2px;
     }
 
-    /* ===== القسم ===== */
+    /* البوكسات */
     #boxes {
-      padding: 2rem;
+      padding: 40px 20px;
     }
 
     .container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: auto;
     }
 
     .box {
       background: white;
       border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
       transform: translateY(50px);
       opacity: 0;
       animation: fadeUp 1s forwards;
@@ -55,12 +57,13 @@
     .box:nth-child(1) { animation-delay: 0.2s; }
     .box:nth-child(2) { animation-delay: 0.4s; }
     .box:nth-child(3) { animation-delay: 0.6s; }
+    .box:nth-child(4) { animation-delay: 0.8s; }
 
     .box img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
-      transition: transform 0.5s;
+      transition: transform 0.5s ease;
     }
 
     .box:hover img {
@@ -68,91 +71,93 @@
     }
 
     .box h2 {
-      margin: 1rem;
-      font-size: 1.5rem;
-      color: #e63946;
+      margin: 15px 0 10px;
+      font-size: 1.5em;
+      color: #1976d2;
+      transition: color 0.3s;
+    }
+
+    .box:hover h2 {
+      color: #ef5350;
     }
 
     .box p {
-      margin: 0 1rem 1.5rem;
-      line-height: 1.7;
+      padding: 0 15px 20px;
+      font-size: 1em;
+      color: #555;
+      line-height: 1.6;
     }
 
-    /* ===== Footer ===== */
+    /* Footer */
     footer {
-      background: #1d3557;
+      background: linear-gradient(90deg, #42a5f5, #1976d2);
       color: white;
       text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-      animation: fadeIn 2s ease;
+      padding: 20px;
+      margin-top: 40px;
+      animation: fadeInUp 1s ease-in-out;
     }
 
-    /* ===== Animations ===== */
+    footer h3 {
+      margin: 0;
+      font-size: 1.2em;
+      letter-spacing: 1px;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideDown {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(0); }
-    }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.5rem;
-      }
-      .box h2 {
-        font-size: 1.2rem;
-      }
-      .box p {
-        font-size: 0.9rem;
-      }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>أشهر معالم المغرب</h1>
+    <h1>المعالم التاريخية بالمغرب</h1>
   </header>
 
   <section id="boxes">
     <div class="container">
 
       <div class="box">
-        <img src="image/معلومات_عن_صومعة_حسان.jpg" alt="صومعة حسان في الرباط">
+        <img src="image/معلومات_عن_صومعة_حسان.jpg" alt="صومعة حسان">
         <h2>صومعة حسان</h2>
         <p>
-          صومعة حسان التاريخية التي بُنيت في العصر الموحدي، تُعد من أبرز المعالم في العاصمة الرباط
-          وتشتهر بعمارتها الإسلامية المميزة.
+          صومعة حسان التاريخية التي تم بناؤها في العصر الموحدي على يد السلطان يعقوب المنصور في مدينة الرباط...
         </p>
       </div>
 
       <div class="box">
-        <img src="image/Tour-From-Fes-To-Marrakech-in-3-Days.jpg" alt="جامع الكتبية في مراكش">
+        <img src="image/Tour-From-Fes-To-Marrakech-in-3-Days.jpg" alt="جامع الكتبية">
         <h2>جامع الكتبية</h2>
         <p>
-          جامع الكتبية من أعرق المساجد في مدينة مراكش، يتميز بمئذنته الشاهقة
-          ويُعتبر رمزًا للعمارة الموحدية في المغرب.
+          جامع الكتبية المراكشي، وهو من المعالم الإسلامية الراسخة في مدينة مراكش ويتميز بمئذنته العالية...
         </p>
       </div>
 
       <div class="box">
-        <img src="image/chefchaouen.jpg" alt="مدينة شفشاون">
-        <h2>مدينة شفشاون</h2>
+        <img src="image/chella.jpg" alt="شالة الأثرية">
+        <h2>شالة</h2>
         <p>
-          المدينة الزرقاء التي تقع في شمال المغرب،
-          تُبهر الزوار بأزقتها الزرقاء الساحرة وهدوئها الفريد بين جبال الريف.
+          موقع شالة الأثري بمدينة الرباط، وهو مكان يجمع بين الأطلال الرومانية والمعالم الإسلامية...
+        </p>
+      </div>
+
+      <div class="box">
+        <img src="image/volubilis.jpg" alt="وليلي الرومانية">
+        <h2>وليلي</h2>
+        <p>
+          موقع وليلي الأثري قرب مدينة مكناس، وهو من أبرز المواقع الأثرية الرومانية في المغرب...
         </p>
       </div>
 
@@ -160,7 +165,7 @@
   </section>
 
   <footer>
-    <p>© 2025 جميع الحقوق محفوظة - معالم المغرب</p>
+    <h3>© 2025 جميع الحقوق محفوظة</h3>
   </footer>
 
 </body>
